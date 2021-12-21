@@ -1,6 +1,11 @@
 #ifndef ALARM_H
 #define ALARM_H
 using namespace std;
+
+struct qa {
+  string q, a;
+};
+
 class Alarm {
   public:
     Alarm();

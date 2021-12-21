@@ -43,9 +43,12 @@ bool Alarm::CheckActive() {
   }
   if(time.compare(truncTime(getCTime())) == 0) {
     string curDay = truncDay(getCTime());
+    cout << "time compare worked!" << endl;
+    cout << this->dayArray[1] << endl;
     if(curDay.compare("Mon") == 0 && this->dayArray[0] == 1) {
       return true;
     } else if(curDay.compare("Tue") == 0 && this->dayArray[1] == 1) {
+      cout << "should return true!" << endl;
       return true;
     } else if(curDay.compare("Wed") == 0 && this->dayArray[2] == 1) {
       return true;

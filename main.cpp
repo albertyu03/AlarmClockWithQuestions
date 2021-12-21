@@ -14,34 +14,64 @@ using namespace std;
 
 
 int main() {
-  string time;
-  int active;
-  int dayArray[7] = {0};
-  cin >> time >> active;
-  Alarm testAlarm = Alarm(time, dayArray, active);
-  writeAlarm(testAlarm);
-  displayAlarms();
-  /*
-  cout << "set your alarm!" << endl << "what time?";
-  string time;
-  cin >> time;
-  int days[7] = {0};
-  for(int i = 0; i < 7; i++) {
-    cout << "Day " << i+1 << ": ";
-    cin >> days[i];
-    cout << endl;
+  vector<Alarm> curAlarms;
+  ifstream inFS;
+  inFS.open("alarms.txt"); //reads "saved" alarms
+  if(!inFS.is_open()) {
+    return -1;
   }
+  string time;
+  int dayArray[7];
+  bool active;
+  string temp;
 
-  Alarm firstAlarm = Alarm(time, days, true);
-  cout << "Alarm has been set for " << firstAlarm.GetTime() << endl;
-  cout << "Alarm is active on these days: ";
+  inFS >> time;
   for(int i = 0; i < 7; i++) {
-    cout << firstAlarm.GetDayArray()[i] << " ";
+    inFS >> dayArray[i];
   }
-  cout << endl;
-  if(firstAlarm.GetActive()) { cout << "Alarm is active" << endl; }
-  writeAlarm(firstAlarm);
-  */
+  inFS >> temp;
+  if(temp.find("ACTIVE")) {
+    active = true;
+  } else {
+    active = false;
+  }
+  while(!inFS.eof()) {
+    Alarm tempAlarm = Alarm(time, dayArray, active);
+    curAlarms.push_back(tempAlarm);
+    inFS >> time;
+    for(int i = 0; i < 7; i++) {
+      inFS >> dayArray[i];
+    }
+    inFS >> temp;
+    if(temp.find("ACTIVE")) {
+      active = true;
+    } else {
+      active = false;
+    }
+  }
+  inFS.close();
+
+
+  inFS.open("questions.txt"); //storing all "saved" questions
+  if(!inFS.is_open()) {
+    cout << "didn't open questions.txt" << endl;
+    return -1;
+  }
+  string question, answer, curLine;
+  vector<qa> quesAns;
+  getline(inFS, curLine);
+  while(!inFS.eof()) {
+    qa tempQA;
+    int ansInd = curLine.find("A: ");
+    tempQA.q = curLine.substr(3, ansInd - 3);
+    tempQA.a = curLine.substr(ansInd, curLine.length());
+    quesAns.push_back(tempQA);
+    getline(inFS, curLine);
+  }
+  inFS.close();
+
+  displayAlarms();
+  displayQuestions();
 } 
 
 /*
