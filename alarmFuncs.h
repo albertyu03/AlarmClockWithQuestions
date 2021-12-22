@@ -12,4 +12,5 @@ void delAlarm(int line);
 void writeQuestion(string question, string answer);
 void displayQuestions();
 void delQuestion(int line);
+void printFunctions();
 #endif

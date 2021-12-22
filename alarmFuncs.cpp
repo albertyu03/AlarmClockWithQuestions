@@ -146,3 +146,12 @@ void delQuestion(int line) {
   outFS.close();
   return;
 }
+void printFunctions() {
+  cout << endl;
+  cout << "'showq' to display current questions" << endl;
+  cout << "'addq' to add a question" << endl;
+  cout << "'delq to delete a question" << endl;
+  cout << "'showa' to display current alarms" << endl;
+  cout << "'adda' to add an alarm" << endl;
+  cout << "'dela' to delete an alarm" << endl;
+}
